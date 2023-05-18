@@ -5,7 +5,10 @@
   <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>
 </head>
 <body>
-  <input type="text" class="message">
+  <label for="message">Message</label>
+  <input type="text" class="message" name="message"><br>
+  <label for="message">room_id</label>
+  <input type="number" class="room_id" name="room_id"><br>
   <button onclick="sendMessage()">Send Message</button>
   <h1>메세지가 될 것이다.</h1>
   <script>
@@ -13,14 +16,25 @@
     const socket = io('http://localhost:3000');
     socket.on('connection');
 
+    // message를 받는 이벤트임.
     socket.on('message', (data) => {
       document.querySelector('h1').innerHTML = data;
+      // 여기에서 confirm 이벤트를 다시 보내주는 것이 정석이다.
     });
     
     const sendMessage = () => {
       const messageInput = document.querySelector('.message');
+      const message1 = {
+        user_id: 1,
+        room_id: 1,
+        message: messageInput.value,
+      };
       const message = messageInput.value;
-      socket.emit('message', message);
+      socket.emit('message', JSON.stringify(message1));
+    }
+
+    const createChatRoom = () => {
+      fetch('').then().then();
     }
   </script>
   
